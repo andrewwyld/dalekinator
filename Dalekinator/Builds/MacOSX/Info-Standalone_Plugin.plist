@@ -8,7 +8,7 @@
     <key>CFBundleIconFile</key>
     <string></string>
     <key>CFBundleIdentifier</key>
-    <string>com.yourcompany.Dalekinator</string>
+    <string>com.DavrosEnterprises.Dalekinator</string>
     <key>CFBundleName</key>
     <string>Dalekinator</string>
     <key>CFBundleDisplayName</key>

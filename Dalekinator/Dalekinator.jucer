@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="mjNN7O" name="Dalekinator" projectType="audioplug" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1">
+              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" companyName="Davros Enterprises">
   <MAINGROUP id="xq3T03" name="Dalekinator">
     <GROUP id="{843BD85F-D44C-7FCB-21C2-EEFD8BCB3078}" name="Source">
       <FILE id="QIJ1DQ" name="PluginProcessor.cpp" compile="1" resource="0"
