@@ -19,6 +19,7 @@
 class DalekinatorAudioProcessor  : public juce::AudioProcessor
 {
 public:
+    constexpr static const double M_TAU = M_PI * 2.0;
     //==============================================================================
     DalekinatorAudioProcessor();
     ~DalekinatorAudioProcessor() override;
@@ -63,7 +64,10 @@ private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DalekinatorAudioProcessor)
     
+    float oscillatorFrequency = DALEK_MODULATION_SPEED_HZ; // default to dalek wobbulation
     double sampleRate;
-    long previousSineAngle;
-    float sineMultiplier;
+    float lastAngle;
+    float angleMultiplier;
+
+    void calculateAngleMultiplier();
 };

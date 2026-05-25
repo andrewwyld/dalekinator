@@ -94,13 +94,19 @@ void DalekinatorAudioProcessor::changeProgramName (int index, const juce::String
 void DalekinatorAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     this->sampleRate = sampleRate;
-    this->sineMultiplier = M_PI * DALEK_MODULATION_SPEED_HZ / sampleRate;
-    this->previousSineAngle = 0;
+    calculateAngleMultiplier();
+    lastAngle = 0;
 }
 
 void DalekinatorAudioProcessor::setOscillatorFrequency(float frequency)
 {
-    this->sineMultiplier = M_PI * frequency / sampleRate;
+    oscillatorFrequency = frequency;
+    calculateAngleMultiplier();
+}
+
+void DalekinatorAudioProcessor::calculateAngleMultiplier()
+{
+    angleMultiplier = M_PI * oscillatorFrequency / sampleRate;
 }
 
 void DalekinatorAudioProcessor::releaseResources()
@@ -151,11 +157,15 @@ void DalekinatorAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
         auto* inputData = buffer.getReadPointer(channel);
         for (int i = 0; i < numSamples; ++i)
         {
-            channelData[i] = inputData[i] * sin(previousSineAngle + i * sineMultiplier);
+            channelData[i] = inputData[i] * sin(lastAngle + i * angleMultiplier);
         }
     }
     
-    previousSineAngle += numSamples * sineMultiplier;
+    lastAngle += angleMultiplier * (float) numSamples;
+    while (lastAngle > M_TAU) // if overflowing
+    {
+        lastAngle -= M_TAU; // wrap
+    }
 }
 
 //==============================================================================
