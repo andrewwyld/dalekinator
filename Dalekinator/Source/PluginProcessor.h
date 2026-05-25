@@ -11,7 +11,6 @@
 #include <JuceHeader.h>
 
 #define DALEK_MODULATION_SPEED_HZ 30.f
-#define DALEK_MODULATION_PERIOD_S 1.f / DALEK_MODULATION_SPEED_HZ
 
 //==============================================================================
 /**
