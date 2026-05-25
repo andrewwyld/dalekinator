@@ -11,26 +11,40 @@
 
 //==============================================================================
 DalekinatorAudioProcessorEditor::DalekinatorAudioProcessorEditor (DalekinatorAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+: AudioProcessorEditor (&p), audioProcessor (p)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
     setSize (400, 300);
+    addAndMakeVisible(frequencySlider);
+    frequencySlider.setRange (20.0, 21500.0);
+    frequencySlider.setTextValueSuffix (" Hz");
+    frequencySlider.addListener (this);
+    frequencySlider.setValue(DALEK_MODULATION_SPEED_HZ);
 }
 
 DalekinatorAudioProcessorEditor::~DalekinatorAudioProcessorEditor()
 {
 }
 
+void DalekinatorAudioProcessorEditor::sliderValueChanged(juce::Slider* s)
+{
+    if (s == &frequencySlider)
+    {
+        audioProcessor.setOscillatorFrequency(frequencySlider.getValue());
+    }
+}
+
 //==============================================================================
 void DalekinatorAudioProcessorEditor::paint (juce::Graphics& g)
 {
+    frequencySlider.setBounds(getLocalBounds());
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    // g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
 
-    g.setColour (juce::Colours::white);
-    g.setFont (juce::FontOptions (15.0f));
-    g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
+    // g.setColour (juce::Colours::white);
+    // g.setFont (juce::FontOptions (15.0f));
+    // g.drawFittedText ("Hello World!", getLocalBounds(), juce::Justification::centred, 1);
 }
 
 void DalekinatorAudioProcessorEditor::resized()
