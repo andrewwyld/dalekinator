@@ -17,7 +17,8 @@ DalekinatorAudioProcessorEditor::DalekinatorAudioProcessorEditor (DalekinatorAud
     // editor's size to whatever you need it to be.
     setSize (400, 300);
     addAndMakeVisible(frequencySlider);
-    frequencySlider.setRange (20.0, 21500.0);
+    frequencySlider.setRange (20.0, 20000.0);
+    frequencySlider.setSkewFactorFromMidPoint(20.0 * sqrt(1000.0)); // multiplicative midpoint
     frequencySlider.setTextValueSuffix (" Hz");
     frequencySlider.addListener (this);
     frequencySlider.setValue(DALEK_MODULATION_SPEED_HZ);
