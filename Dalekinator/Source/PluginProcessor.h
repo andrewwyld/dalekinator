@@ -58,6 +58,7 @@ public:
     
     //==============================================================================
     void setOscillatorFrequency(float frequency);
+    float getOscillatorFrequency();
 
 private:
     //==============================================================================

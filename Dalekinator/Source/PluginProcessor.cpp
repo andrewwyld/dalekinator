@@ -104,6 +104,11 @@ void DalekinatorAudioProcessor::setOscillatorFrequency(float frequency)
     calculateAngleMultiplier();
 }
 
+float DalekinatorAudioProcessor::getOscillatorFrequency()
+{
+    return oscillatorFrequency;
+}
+
 void DalekinatorAudioProcessor::calculateAngleMultiplier()
 {
     angleMultiplier = M_PI * oscillatorFrequency / sampleRate;
