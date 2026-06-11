@@ -22,6 +22,19 @@ DalekinatorAudioProcessor::DalekinatorAudioProcessor()
                        )
 #endif
 {
+    addParameter(
+                 oscillatorFrequency =
+                 new juce::AudioParameterFloat(
+                                               "oscillatorFrequency",
+                                               "Oscillator Frequency",
+                                               juce::NormalisableRange<float>(
+                                                                              OSCILLATOR_MINIMUM_HZ,
+                                                                              OSCILLATOR_MAXIMUM_HZ,
+                                                                              OSCILLATOR_INCREMENT_HZ
+                                                                              ),
+                                               DALEK_MODULATION_SPEED_HZ // default to dalek wobbulation
+                                               )
+                 );
 }
 
 DalekinatorAudioProcessor::~DalekinatorAudioProcessor()
@@ -100,18 +113,18 @@ void DalekinatorAudioProcessor::prepareToPlay (double sampleRate, int samplesPer
 
 void DalekinatorAudioProcessor::setOscillatorFrequency(float frequency)
 {
-    oscillatorFrequency = frequency;
+    *oscillatorFrequency = frequency;
     calculateAngleMultiplier();
 }
 
 float DalekinatorAudioProcessor::getOscillatorFrequency()
 {
-    return oscillatorFrequency;
+    return *oscillatorFrequency;
 }
 
 void DalekinatorAudioProcessor::calculateAngleMultiplier()
 {
-    angleMultiplier = M_PI * oscillatorFrequency / sampleRate;
+    angleMultiplier = M_PI * *oscillatorFrequency / sampleRate;
 }
 
 void DalekinatorAudioProcessor::releaseResources()
@@ -187,15 +200,14 @@ juce::AudioProcessorEditor* DalekinatorAudioProcessor::createEditor()
 //==============================================================================
 void DalekinatorAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
+    // 0
+    juce::MemoryOutputStream (destData, true).writeFloat (*oscillatorFrequency);
 }
 
 void DalekinatorAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
+    // 0
+    *oscillatorFrequency = juce::MemoryInputStream (data, static_cast<size_t> (sizeInBytes), false).readFloat();
 }
 
 //==============================================================================

@@ -12,6 +12,11 @@
 
 #define DALEK_MODULATION_SPEED_HZ 30.f
 
+#define OSCILLATOR_MINIMUM_HZ 0.2f // Hz
+#define OSCILLATOR_MAXIMUM_HZ 20000.f // Hz
+#define OSCILLATOR_INCREMENT_HZ 0.01f // Hz
+#define OSCILLATOR_SKEW 63.24555 // geometric mean of max and min
+
 //==============================================================================
 /**
 */
@@ -64,7 +69,7 @@ private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DalekinatorAudioProcessor)
     
-    float oscillatorFrequency = DALEK_MODULATION_SPEED_HZ; // default to dalek wobbulation
+    juce::AudioParameterFloat* oscillatorFrequency;
     double sampleRate;
     float lastAngle;
     float angleMultiplier;
